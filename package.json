@@ -1,0 +1,19 @@
+{
+  "name": "dore-open",
+  "version": "0.0.1",
+  "description": "React Native Open File",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phodal/dore-open.git"
+  },
+  "author": "Phodal HUANG",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phodal/dore-open/issues"
+  },
+  "homepage": "https://github.com/phodal/dore-open#readme"
+}
