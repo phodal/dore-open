@@ -14,6 +14,8 @@
 
 @synthesize bridge = _bridge;
 
+RCT_EXPORT_MODULE()
+
 RCT_EXPORT_METHOD(open:(NSString *) url)
 {
 
@@ -25,10 +27,6 @@ RCT_EXPORT_METHOD(open:(NSString *) url)
 
 - (nonnull id<QLPreviewItem>)previewController:(nonnull QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
   return self;
-}
-
-+ (NSString *)moduleName {
-    return @"DoreOpen";
 }
 
 @end
