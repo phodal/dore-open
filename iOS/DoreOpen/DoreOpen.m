@@ -16,71 +16,63 @@
 
 RCT_EXPORT_MODULE()
 
-NSString* _url;
-NSString* _assetFileName;
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        [self initialize];
+RCT_EXPORT_METHOD(open:(NSString *) path {
+    if (path != nil && [path length] > 0) {
+        
+        NSURL *url = [NSURL URLWithString:path];
+        NSError *err;
+        
+        if (url.isFileURL &&
+            [url checkResourceIsReachableAndReturnError:&err] == YES) {
+            
+            self.fileUrl = url;
+            
+            QLPreviewController *previewCtrl = [[QLPreviewController alloc] init];
+            previewCtrl.delegate = self;
+            previewCtrl.dataSource = self;
+            
+            [previewCtrl.navigationItem setRightBarButtonItem:nil];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIWindow *window = RCTKeyWindow();
+//                [window presentViewController:previewCtrl animated:YES completion:nil];
+                [window addSubview:self.previewCtrl.view];
+            });
+            
+            NSLog(@"cordova.disusered.open - Success!");
+            
+        } else {
+            NSLog(@"cordova.disusered.open - Invalid file URL");
+        }
+    } else {
+        NSLog(@"cordova.disusered.open - Missing URL argument");
     }
-    return self;
-    
-}
-
-- (instancetype)initWithPreviewItemUrl:(NSString*)url {
-    NSAssert(url != nil, @"Preview Item URL cannot be nil");
-    self = [super init];
-    if (self) {
-        _url = url;
-        [self initialize];
-    }
-    return self;
-}
-
-- (void)initialize {
-    self.previewCtrl = [[QLPreviewController alloc] init];
-    self.previewCtrl.delegate = self;
-    self.previewCtrl.dataSource = self;
-    self.previewView = self.previewCtrl.view;
-//    self.clipsToBounds = YES;
-//    [self addSubview:self.previewCtrl.view];
-}
-
-- (void)layoutSubviews {
-//    [super layoutSubviews];
-//    [self.previewView setFrame:self.frame];
-}
-
-- (void)setUrl:(NSString *)urlString {
-    _url = [urlString stringByRemovingPercentEncoding];
-    [self.previewCtrl refreshCurrentPreviewItem];
-}
-
-- (void)setAssetFileName:(NSString*)filename {
-    _url = [[NSBundle mainBundle] pathForResource:[filename stringByDeletingPathExtension] ofType:[filename pathExtension]];
-    [self.previewCtrl refreshCurrentPreviewItem];
-}
-
-RCT_EXPORT_METHOD(open:(NSString *) filename) {
-    _url = [[NSBundle mainBundle] pathForResource:[filename stringByDeletingPathExtension] ofType:[filename pathExtension]];
-    [self.previewCtrl refreshCurrentPreviewItem];
-}
+})
 
 #pragma mark - QLPreviewControllerDataSource
 
-- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
+- (NSInteger)numberOfPreviewItemsInPreviewController:
+(QLPreviewController *)controller {
     return 1;
 }
 
-- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index {
-    return [NSURL URLWithString:_url];
+- (id<QLPreviewItem>)previewController:(QLPreviewController *)controller
+                    previewItemAtIndex:(NSInteger)index {
+    return self;
 }
 
 #pragma mark - QLPreviewControllerDelegate
 
 - (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
     return YES;
+}
+
+- (void)previewControllerDidDismiss:(QLPreviewController *)controller {
+    NSLog(@"Dismiss");
+}
+
+- (NSURL *)previewItemURL {
+    return self.fileUrl;
 }
 
 @end
