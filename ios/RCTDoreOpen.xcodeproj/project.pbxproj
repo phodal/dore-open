@@ -6,11 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		5D72D2EC1C16249000E22EC1 /* RCTDoreOpen.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D72D2EB1C16249000E22EC1 /* RCTDoreOpen.h */; };
-		5D72D2EE1C16249000E22EC1 /* RCTDoreOpen.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D72D2ED1C16249000E22EC1 /* RCTDoreOpen.m */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		5D72D2E61C16249000E22EC1 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -18,16 +13,15 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				5D72D2EC1C16249000E22EC1 /* RCTDoreOpen.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4062EA5F1FEB882E004EDB55 /* DoreOpen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoreOpen.h; sourceTree = "<group>"; };
+		4062EA601FEB882E004EDB55 /* DoreOpen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoreOpen.m; sourceTree = "<group>"; };
 		5D72D2E81C16249000E22EC1 /* libRCTDoreOpen.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTDoreOpen.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D72D2EB1C16249000E22EC1 /* RCTDoreOpen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTDoreOpen.h; sourceTree = "<group>"; };
-		5D72D2ED1C16249000E22EC1 /* RCTDoreOpen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTDoreOpen.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +54,8 @@
 		5D72D2EA1C16249000E22EC1 /* RCTDoreOpen */ = {
 			isa = PBXGroup;
 			children = (
-				5D72D2EB1C16249000E22EC1 /* RCTDoreOpen.h */,
-				5D72D2ED1C16249000E22EC1 /* RCTDoreOpen.m */,
+				4062EA5F1FEB882E004EDB55 /* DoreOpen.h */,
+				4062EA601FEB882E004EDB55 /* DoreOpen.m */,
 			);
 			path = RCTDoreOpen;
 			sourceTree = "<group>";
@@ -122,7 +116,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D72D2EE1C16249000E22EC1 /* RCTDoreOpen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
