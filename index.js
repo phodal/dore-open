@@ -1,11 +1,5 @@
 import { NativeModules } from 'react-native';
 
-const RCTDoreOpen = NativeModules.DoreOpen
+console.log(NativeModules);
 
-let DoreOpen = {}
-
-DoreOpen.open = (options) => {
-  return RCTDoreOpen.open(options);
-}
-
-module.exports = DoreOpen;
+module.exports = NativeModules.DoreOpen;
