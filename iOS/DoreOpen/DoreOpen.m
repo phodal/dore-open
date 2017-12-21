@@ -3,7 +3,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTEventDispatcher.h>
 
-@interface DoreOpen () <QLPreviewControllerDataSource, QLPreviewControllerDelegate>
+@interface DoreOpen () <RCTBridgeModule, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 
 @property UIView* previewView;
 @property QLPreviewController* previewCtrl;
@@ -16,7 +16,7 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(open:(NSString *) path {
+RCT_EXPORT_METHOD(open:(NSString *) path) {
     if (path != nil && [path length] > 0) {
         
         NSURL *url = [NSURL URLWithString:path];
@@ -34,9 +34,13 @@ RCT_EXPORT_METHOD(open:(NSString *) path {
             [previewCtrl.navigationItem setRightBarButtonItem:nil];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                UIWindow *window = RCTKeyWindow();
-//                [window presentViewController:previewCtrl animated:YES completion:nil];
-                [window addSubview:self.previewCtrl.view];
+//                UIWindow *window = RCTKeyWindow();
+//                UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+//                RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName: @"AccountLogin"];
+
+                [root presentViewController:previewCtrl animated:YES completion:nil];
+//                [root addSubview:self.previewCtrl.view];
             });
             
             NSLog(@"cordova.disusered.open - Success!");
@@ -47,7 +51,7 @@ RCT_EXPORT_METHOD(open:(NSString *) path {
     } else {
         NSLog(@"cordova.disusered.open - Missing URL argument");
     }
-})
+}
 
 #pragma mark - QLPreviewControllerDataSource
 
