@@ -2,5 +2,6 @@
 
 @interface DoreOpen : NSObject <RCTBridgeModule>
 
-@end
+- (instancetype)initWithPreviewItemUrl:(NSString*)url;
 
+@end
