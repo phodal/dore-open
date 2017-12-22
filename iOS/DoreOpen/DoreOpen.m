@@ -18,36 +18,36 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(open:(NSString *) path) {
     if (path != nil && [path length] > 0) {
-        
         NSURL *url = [NSURL URLWithString:path];
-        NSError *err;
+        self.fileUrl = url;
         
-        if (url.isFileURL &&
-            [url checkResourceIsReachableAndReturnError:&err] == YES) {
-            
-            self.fileUrl = url;
-            
-            QLPreviewController *previewCtrl = [[QLPreviewController alloc] init];
-            previewCtrl.delegate = self;
-            previewCtrl.dataSource = self;
-            
-            [previewCtrl.navigationItem setRightBarButtonItem:nil];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                UIWindow *window = RCTKeyWindow();
-//                UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-//                RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName: @"AccountLogin"];
+        self.previewCtrl = [[QLPreviewController alloc] init];
+        self.previewCtrl.delegate = self;
+        self.previewCtrl.dataSource = self;
+        self.previewView = self.previewCtrl.view;
+        
+        [self.previewCtrl.navigationItem setRightBarButtonItem:nil];
+        UIWindow *window = RCTKeyWindow();
+    
+        CGFloat width;
+        CGFloat height;
 
-                [root presentViewController:previewCtrl animated:YES completion:nil];
-//                [root addSubview:self.previewCtrl.view];
-            });
-            
-            NSLog(@"cordova.disusered.open - Success!");
-            
+        UIInterfaceOrientation deviceOrientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationIsLandscape(deviceOrientation)){
+            width = window.frame.size.width;
+            height= window.frame.size.height;
         } else {
-            NSLog(@"cordova.disusered.open - Invalid file URL");
+            width = window.frame.size.width;
+            height= window.frame.size.height;
         }
+        self.previewCtrl.view.frame = CGRectMake(0, 0, width, height);
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [window addSubview:self.previewCtrl.view];
+            
+            [window makeKeyAndVisible];
+
+        });
     } else {
         NSLog(@"cordova.disusered.open - Missing URL argument");
     }
